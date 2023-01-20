@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"  
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Show Policy</title>
+<meta charset="utf-8" ></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<style>
+/*          .table-class { */
+/*              border-collapse: collapse; */
+/*              width: 80% !important; */
+/*              margin: auto; */
+/*          } */
+</style>
+</head>
+<h:body>
+<ui:include src="AgentDashboardjsf.xhtml" />
+
+<div class="text-right m-2">
+<a href="AddPolicyJsf.xhtml"><button class="btn btn-primary ">Add Policy</button></a>
+</div>
+
+<c:if test="${param.message == 'policydeleted'}"><p style="font-size: 20px; color: red; text-align: center;">Policy deleted.</p></c:if>
+<c:if test="${param.message == 'policynotdeleted'}"><p style="font-size: 20px; color: red; text-align: center;">Policy not deleted, because already being used somewhere.</p></c:if>
+
+<h:dataTable class="table-class" id="policyTab" value="#{policyDAO1.showPolicy()}" var="p" border="3">
+<h:column>
+<f:facet name="header">Policy Id</f:facet>
+<h:outputText value="#{p.policyId}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Policy Name</f:facet>
+<h:outputText value="#{p.policyName}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Policy Type</f:facet>
+<h:outputText value="#{p.policyType}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Premium Amount</f:facet>
+<h:outputText value="#{p.premiumAmount}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Pay Mode</f:facet>
+<h:outputText value="#{p.payMode}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Term</f:facet>
+<h:outputText value="#{p.term}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Installment Pay Per Mode</f:facet>
+<h:outputText value="#{p.installmentAmountPerPayMode}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Matured Amount</f:facet>
+<h:outputText value="#{p.maturedAmount}"/>
+</h:column>
+
+<h:column>
+<f:facet name="header">Update</f:facet>
+<a href="UpdatePolicy.jsp?id=#{p.policyId}">Update</a>
+</h:column>
+
+<h:column>
+<f:facet name="header">Delete</f:facet>
+<h:form id="delete">
+<h:inputHidden id="message" />
+<h:message for="message"/>
+<h:commandButton action = "#{policyDAO1.deletePolicy(p.policyId)}" value="Delete" />
+</h:form>
+</h:column>
+</h:dataTable>
+
+<script>
+        $(document).ready(function () {
+            $("#policyTab").DataTable({
+                scrollY : '50vh',
+                scrollCollapse : true
+            });
+        });
+</script>
+
+ 
+
+    <!-- JAVASCRIPT FILES -->
+<!--<script src="js/jquery.min.js"></script> -->
+<script src="js/jquery.sticky.js"></script>
+<script src="js/click-scroll.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/custom.js"></script>
+
+ 
+
+</h:body>
+</html>
